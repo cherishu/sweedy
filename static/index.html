@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweedy</title>
+    <style>
+        #query_form{
+            width: 100%;
+            position: fixed;
+            top:0;left:0;
+            background-color: rgba(0,0,0,.8);
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="_onsubmit(this)" target="result" id="query_form">
+    <input type="button" value="ä" onclick="fillIn(this)">
+    <input type="button" value="å" onclick="fillIn(this)">
+    <input type="button" value="ö" onclick="fillIn(this)"><br/>
+    <input type="text" name="kword">
+    <button type="submit">Go</button>
+    <button type="reset">Clear</button> 
+    </form>
+    <iframe src="https://en.wiktionary.org/wiki/#Swedish" frameborder="0" name="result" width="100%" height="768"></iframe>
+    <script>
+        var aurl = "https://en.wiktionary.org/wiki/{{0}}#Swedish";
+        var kword = document.getElementsByName('kword')[0]
+        function _onsubmit(f){
+            var val = (kword.value || '').trim();
+            f.setAttribute('action',aurl.replace(/\{\{0\}\}/,val));
+            f.submit();
+            return false;
+        }
+        function fillIn(n){
+            var arr = kword.value ? kword.value.split('') : []; 
+            var pos = kword.selectionStart;
+            arr.splice(pos, 0, n.value);
+            kword.value = arr.join('');
+        }
+    </script>
+</body>
+</html>
